@@ -1,4 +1,6 @@
-numpy
-pandas
-scikit-learn
+# Pinned to the versions recorded for the documented results run (see README).
+# matplotlib is left unpinned: it is used for plotting only.
+numpy==2.2.6
+pandas==2.3.3
+scikit-learn==1.7.2
 matplotlib

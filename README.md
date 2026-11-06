@@ -15,6 +15,7 @@ git clone https://github.com/hadhiabdulla/advids-adversarial-resilience-lab.git
 cd advids-adversarial-resilience-lab
 pip install -r requirements.txt
 python tests/test_constraints.py          # constraint checks (downloads the data on first run)
+python tests/test_search.py              # search and summary checks
 python nids_robustness.py                 # full experiment: 5 seeds x 2 models
 ```
 
@@ -63,4 +64,4 @@ NSL-KDD (Tavallaee, Bagheri, Lu and Ghorbani, "A Detailed Analysis of the KDD CU
 
 ## Files
 
-`nids_robustness.py` data loading, attack, defence, evaluation, report and plot. `tests/test_constraints.py` checks the attack only makes allowed changes. `results/` outputs of the full run and its log.
+`nids_robustness.py` data loading, attack, defence, evaluation, report and plot. `tests/test_constraints.py` checks the attack only makes allowed changes. `tests/test_search.py` checks the search never raises a record's attack score, repeats under a fixed seed, and that the summary means and spreads are computed correctly. `results/` outputs of the full run and its log.

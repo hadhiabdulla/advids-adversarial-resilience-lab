@@ -15,6 +15,7 @@ jobs:
           python-version: '3.10'
           cache: pip
       - run: pip install -r requirements.txt
-      # downloads the NSL-KDD data from its public mirror on first run
+      - run: python tests/test_report.py
+      # the next two download the NSL-KDD data from its public mirror on first run
       - run: python tests/test_constraints.py
       - run: python tests/test_search.py

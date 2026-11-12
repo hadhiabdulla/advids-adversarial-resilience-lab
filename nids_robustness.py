@@ -227,15 +227,22 @@ def plot(summary, path):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    rows = [r for r in summary if r["split"] == "holdout"]
-    labels = [f"{r['model'].upper()}\n{r['version']}" for r in rows]
-    x = np.arange(len(rows)); w = 0.38
-    fig, ax = plt.subplots(figsize=(8, 4.5))
-    ax.bar(x - w/2, [100*r["detect_mean"] for r in rows], w, label="Clean", color="#3b82f6")
-    ax.bar(x + w/2, [100*r["detect_under_attack_mean"] for r in rows], w,
-           yerr=[100*r["detect_under_attack_std"] for r in rows], label="Under feature-space attack", color="#ef4444")
-    ax.set_xticks(x); ax.set_xticklabels(labels); ax.set_ylabel("Attack detection rate (%)")
-    ax.set_title("Holdout: attack detection, clean vs under stress test"); ax.legend(); ax.set_ylim(0, 105)
+    panels = [("holdout", "Holdout (20% of KDDTrain+)"),
+              ("kddtest_exploratory", "KDDTest+ (exploratory benchmark, see README)")]
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.5), sharey=True)
+    for ax, (split, title) in zip(axes, panels):
+        rows = [r for r in summary if r["split"] == split]
+        labels = [f"{r['model'].upper()}\n{r['version']}" for r in rows]
+        x = np.arange(len(rows)); w = 0.38
+        ax.bar(x - w/2, [100*r["detect_mean"] for r in rows], w, label="Clean", color="#3b82f6")
+        ax.bar(x + w/2, [100*r["detect_under_attack_mean"] for r in rows], w,
+               yerr=[100*r["detect_under_attack_std"] for r in rows],
+               label="Under feature-space attack", color="#ef4444")
+        ax.set_xticks(x); ax.set_xticklabels(labels); ax.set_ylim(0, 105)
+        ax.set_title(title, fontsize=10)
+    axes[0].set_ylabel("Attack detection rate (%)")
+    axes[0].legend()
+    fig.suptitle("Attack detection, clean vs under stress test")
     fig.tight_layout(); fig.savefig(path, dpi=150)
 
 
@@ -257,5 +264,5 @@ if __name__ == "__main__":
     summ = summarise(rows)
     json.dump(summ, open(os.path.join(a.out, "summary.json"), "w"), indent=1)
     write_report(summ, os.path.join(a.out, "results.md"))
-    plot(summ, os.path.join(a.out, "robustness_holdout.png"))
+    plot(summ, os.path.join(a.out, "robustness.png"))
     print(open(os.path.join(a.out, "results.md")).read())

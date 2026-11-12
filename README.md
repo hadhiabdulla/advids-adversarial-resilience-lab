@@ -32,6 +32,8 @@ CPU only, no GPU. Measured on a small shared Linux sandbox: about 1 minute per R
 
 ## Results
 
+![Attack detection, clean vs under the stress test, on the holdout and the exploratory KDDTest+ benchmark](results/robustness.png)
+
 20% holdout of KDDTrain+ (5 seeds). "Detect" is the share of attack records flagged. The attacker re-targets each model, including the hardened one.
 
 | Model | Version | Accuracy | Detect | Under attack | Under stronger attack (post-hoc) | False positives |
@@ -64,4 +66,4 @@ NSL-KDD (Tavallaee, Bagheri, Lu and Ghorbani, "A Detailed Analysis of the KDD CU
 
 ## Files
 
-`nids_robustness.py` data loading, attack, defence, evaluation, report and plot. `tests/test_constraints.py` checks the attack only makes allowed changes. `tests/test_search.py` checks the search never raises a record's attack score, repeats under a fixed seed, and that the summary means and spreads are computed correctly. `results/` outputs of the full run and its log.
+`nids_robustness.py` data loading, attack, defence, evaluation, report and plot. `tests/test_constraints.py` checks the attack only makes allowed changes. `tests/test_search.py` checks the search never raises a record's attack score, repeats under a fixed seed, and that the summary means and spreads are computed correctly. `tests/test_report.py` checks the results table and the two-panel figure from a small synthetic summary, without downloading the dataset. `results/` outputs of the full run and its log; `results/robustness.png` charts both splits.

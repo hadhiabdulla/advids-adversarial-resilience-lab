@@ -264,5 +264,6 @@ if __name__ == "__main__":
     summ = summarise(rows)
     json.dump(summ, open(os.path.join(a.out, "summary.json"), "w"), indent=1)
     write_report(summ, os.path.join(a.out, "results.md"))
-    plot(summ, os.path.join(a.out, "robustness.png"))
+    # kept filename: the next full run overwrites the checked-in figure in place
+    plot(summ, os.path.join(a.out, "robustness_holdout.png"))
     print(open(os.path.join(a.out, "results.md")).read())
